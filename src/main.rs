@@ -13,10 +13,10 @@ fn main() {
         if seek_the_path() {
             "Eternity lies ahead of us, and behind. Your path is not yet finished."
         } else {
-            "What is the sound of one hand clapping (for you)?"
+            panic!("What is the sound of one hand clapping (for you)?")
         }
     } else {
-        "Meditate on your approach and return. Mountains are merely mountains."
+        panic!("Meditate on your approach and return. Mountains are merely mountains.")
     };
 
     println!("{}", message);
