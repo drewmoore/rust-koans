@@ -11,7 +11,7 @@ fn array_index() {
 // [i32; 0] = []
 #[test]
 fn array_empty() {
-    let arr: [i32; 0];
+    let arr: [i32; 0] = [];
     assert!(arr.len() == 0);
 }
 
@@ -19,11 +19,11 @@ fn array_empty() {
 // out of its bounds will cause an error. Let's cause
 // that error in this example.
 #[test]
-#[should_panic]
-#[allow(const_err)]
 fn out_of_index() {
     let arr: [&'static str; 5] = ["rust", "is", "mostly", "for", "nerds"];
-    arr[7];
+    let bad_index = 99;
+    let result = std::panic::catch_unwind(|| arr[bad_index]);
+    assert!(result.is_err());
 }
 
 // Elements can be replaced in an array at a certain index.
@@ -31,7 +31,7 @@ fn out_of_index() {
 #[test]
 fn insert_at_index() {
     let mut arr: [u8; 5] = [0, 1, 2, 3, 4];
-    arr[5] = 0;
+    arr[4] = 0;
     assert!(arr == [0, 1, 2, 3, 0]);
 }
 
@@ -87,7 +87,7 @@ fn complex_array_filter_map() {
             None
         });
     assert!(iterator.next().unwrap() == 2);
-    assert!(iterator.next().unwrap() == 16);
+    assert!(iterator.next().unwrap() == 4);
     assert!(iterator.next().is_none());
 }
 
@@ -98,7 +98,7 @@ fn for_loops() {
     let mut y: u64 = 1;
     for x in &arr {
         assert!(*x == y);
-        __
+        y = y + 1
     }
 }
 
@@ -107,8 +107,12 @@ fn for_loops() {
 fn for_loops_two() {
     let words: [&'static str; 3] = ["I", "love", "Rust"];
     let mut sentence: String = String::new();
-    for word in words.iter() {
-        __
+    for (i, word) in words.iter().enumerate() {
+       sentence.push_str(word);
+       if i == words.len() - 1 {
+            return;
+       }
+       sentence.push_str(" ");
     }
     println!("{:?}", sentence);
     assert!(sentence == "I love Rust".to_string());
