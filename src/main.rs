@@ -16,7 +16,7 @@ fn main() {
             "What is the sound of one hand clapping (for you)?"
         }
     } else {
-        "Meditate on your approach and return. Mountains are merely mountains."
+        panic!("Meditate on your approach and return. Mountains are merely mountains.")
     };
 
     println!("{}", message);
